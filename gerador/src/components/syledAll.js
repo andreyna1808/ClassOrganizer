@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 //DESIGNER O APP.JS
 export const All = styled.div `
-    margin: 0;
-    padding: 0;
     max-width: 100%;
     height: 100vh;
     box-sizing: border-box;
@@ -50,4 +48,23 @@ export const Foot = styled.footer `
 
 export const SpanNone = styled.span `
     display: none;
+`
+export const H1 = styled.h1`
+	font-family: 'Gotham Ultra', sans-serif;
+	color: white;
+    text-shadow: 1px 1px 1px white;
+    opacity: 0.9;
+	width: 80%;
+	font-weight: bold;
+	padding: 40px 70px;
+	font-size: 62px;
+`
+export const CliqueAq = styled.a`
+	color: white;
+	text-decoration: none;
+	text-decoration-color: none;
+	&:hover {
+		color: #22b6a8;
+		transition: 0.3s;
+	}
 `

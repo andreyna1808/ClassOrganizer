@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { All } from '../home/styled';
-import { CliqueAq, H1, Paragrafo, Container, ContainerMenor, Botoes } from './styled';
+import { All, CliqueAq, H1 } from '../../components/syledAll';
+import { Paragrafo, ContainerForm, ContainerMenor, Botoes, Input, ParagrafoTwo } from './styled';
 
 export default class Cadastro extends React.Component {
 	render() {
@@ -9,26 +9,28 @@ export default class Cadastro extends React.Component {
 			<All>
 				<H1>Primeira Vez Por Aqui?</H1>
 				<Paragrafo>
-					Vamos adicionar sua escola para poder adicionar preferências <br></br> para cada turma e professor. Caso já
-					tenha um cadastro, <Link to="/login"><CliqueAq>clique aqui</CliqueAq>
+					Vamos adicionar sua escola para poder adicionar preferências <br /> para cada turma e professor.
+					Caso já tenha um cadastro,{' '}
+					<Link to="/login">
+						<CliqueAq>clique aqui</CliqueAq>
 					</Link>
 				</Paragrafo>
 
-				<Container>
+				<ContainerForm>
 					<ContainerMenor>
-						<p>USUÁRIO</p>
-						<input />
+						<ParagrafoTwo>USUÁRIO:</ParagrafoTwo>
+						<Input required type="text" />
 					</ContainerMenor>
 					<ContainerMenor>
-						<p>E-MAIL</p>
-						<input />
+						<ParagrafoTwo>E-MAIL:</ParagrafoTwo>
+						<Input required type="email" />
 					</ContainerMenor>
 					<ContainerMenor>
-						<p>SENHA</p>
-						<input />
+						<ParagrafoTwo>SENHA:</ParagrafoTwo>
+						<Input required type="password" />
 					</ContainerMenor>
-            <Botoes>Cadastrar</Botoes>
-				</Container>
+					<Botoes type='submit'>Cadastrar</Botoes>
+				</ContainerForm>
 			</All>
 		);
 	}

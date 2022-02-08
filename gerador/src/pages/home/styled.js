@@ -15,6 +15,8 @@ export const FonteH1 = styled.h1`
     font-weight: bolder;
     padding: 40px 70px;
     font-size: 62px;
+    text-shadow: 1px 1px 1px white;
+    opacity: 0.9;
 `
 export const FonteH2 = styled.h2`
     font-family: 'Helvica';
@@ -49,12 +51,6 @@ export const Botoes = styled.button`
         color: white;
         transition: 0.3s;
     }
-`
-export const All = styled.div `
-    max-width: 100%;
-    height: 100vh;
-    box-sizing: border-box;
-    background: linear-gradient(180deg,rgba(12,96,147,1)0%,rgba(33,33,101,1)100%);
 `
 
 export const B1 = styled.div`

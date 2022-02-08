@@ -1,39 +1,20 @@
 import styled from 'styled-components';
 
-export const CliqueAq = styled.a`
-	color: white;
-	text-decoration: none;
-	text-decoration-color: none;
-	&:hover {
-		color: #22b6a8;
-		transition: 0.3s;
-	}
-`;
-export const H1 = styled.h1`
-	font-family: 'Gotham Ultra', sans-serif;
-	color: white;
-    text-shadow: 1px 1px 1px white;
-    opacity: 0.9;
-	width: 80%;
-	font-weight: bold;
-	padding: 40px 70px;
-	font-size: 62px;
-`
 export const Paragrafo = styled.p`
     font-family: 'Helvetica', sans-serif;
 	color: white;
 	width: 90%;
 	font-weight: bold;
-	padding: 0 30px;
+	padding: 0 50px;
     padding-bottom: 30px;
 	font-size: 18px;
 `
-export const Container = styled.div`
-	width: 90%;
-    align-items: center;
+export const ContainerForm = styled.div`
+	width: 77%;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin-right: 50px;
+    align-items: flex-end;
 `
 export const ContainerMenor = styled.div`
     display: flex;
@@ -50,9 +31,31 @@ export const Botoes = styled.button`
     color: #212165;
     cursor: pointer;
     font-weight: 900;
+    margin: 7px 0;
     &:hover{
         background-color:  #22b6a8;
         color: white;
         transition: 0.3s;
     }
+`
+
+export const Input = styled.input`
+font-family:' Helvica bold';
+    background-color: #ffffff;
+    border: none;
+    padding: 12px 22px;
+    font-size: 16px;
+    border-radius: 10px;
+    color: #212165;
+    font-weight: 900;
+`
+export const ParagrafoTwo = styled.p`
+    font-family: 'Helvetica', sans-serif;
+	color: white;
+	font-size: 16px;
+    margin: 0 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 `
