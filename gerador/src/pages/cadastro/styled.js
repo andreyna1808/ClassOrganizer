@@ -9,7 +9,7 @@ export const Paragrafo = styled.p`
     padding-bottom: 30px;
 	font-size: 18px;
 `
-export const ContainerForm = styled.div`
+export const ContainerForm = styled.form`
 	width: 77%;
     display: flex;
     flex-direction: column;

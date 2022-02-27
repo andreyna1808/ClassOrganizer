@@ -3,8 +3,7 @@ import { Botoes, ContainerForm, ContainerMenor, Input, Paragrafo, ParagrafoTwo }
 import { Link } from 'react-router-dom';
 import { All, CliqueAq, H1 } from '../../components/syledAll';
 
-export default class Login extends React.Component {
-	render() {
+export default function Login() {
 		return (
 			<All>
 				<H1> Olá, Usuário! </H1>
@@ -28,5 +27,4 @@ export default class Login extends React.Component {
 				</ContainerForm>
 			</All>
 		);
-	}
 }

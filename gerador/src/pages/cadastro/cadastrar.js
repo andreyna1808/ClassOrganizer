@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import { All, CliqueAq, H1 } from '../../components/syledAll';
 import { Paragrafo, ContainerForm, ContainerMenor, Botoes, Input, ParagrafoTwo } from './styled';
 
-export default class Cadastro extends React.Component {
-	render() {
+export default function Cadastro() {
 		return (
 			<All>
 				<H1>Primeira Vez Por Aqui?</H1>
 				<Paragrafo>
 					Vamos adicionar sua escola para poder adicionar preferências <br /> para cada turma e professor.
-					Caso já tenha um cadastro,{' '}
+					Caso já tenha um cadastro,
 					<Link to="/login">
 						<CliqueAq>clique aqui</CliqueAq>
 					</Link>
@@ -33,5 +32,4 @@ export default class Cadastro extends React.Component {
 				</ContainerForm>
 			</All>
 		);
-	}
 }

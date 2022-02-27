@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { All } from '../../components/syledAll';
 import { B1, Botoes, Container, FlexDisplay, FonteH1, FonteH2, FonteH2Boton, PFonte, PFonteBoton, PFonteBotonTwo } from './styled';
 
-export default class Home extends React.Component {
-	render() {
+export default function Home() {
 		return (
 			<All>
 				<FonteH1>
@@ -35,5 +34,4 @@ export default class Home extends React.Component {
 				</Container>
 			</All>
 		);
-	}
 }
