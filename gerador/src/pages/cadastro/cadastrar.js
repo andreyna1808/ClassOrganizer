@@ -1,9 +1,38 @@
+import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { All, CliqueAq, H1 } from '../../components/syledAll';
+import { Register_url } from '../../components/urls';
+import useForm from '../../hooks/useForm';
 import { Paragrafo, ContainerForm, ContainerMenor, Botoes, Input, ParagrafoTwo } from './styled';
 
 export default function Cadastro() {
+	const [ form, onChange ] = useForm({username: '', password: '', email: ''})
+	const history = useHistory()
+
+ 	const postRegister = (e) => {
+	 	e.preventDefault();
+
+    axios.post(Register_url, form)
+		console.log('antes do then',form)
+		.then((res) => {
+			console.log('No then', form)
+			alert('Cadastro realizado com sucesso! Bom proveito')
+      localStorage.setItem('tokenGerador', res.data.token);
+			history('/login')
+    })
+    .catch((err) => {
+			console.log('No catch',form)
+			console.log(err.response);
+    })
+  }
+	
+  const keyPressEnter = (e) => {
+    if(e.key === 'Enter' && form.username !== '' && form.password !== ''){
+      postRegister()
+    }
+  } 
+
 		return (
 			<All>
 				<H1>Primeira Vez Por Aqui?</H1>
@@ -15,20 +44,20 @@ export default function Cadastro() {
 					</Link>
 				</Paragrafo>
 
-				<ContainerForm>
+				<ContainerForm onSubmit={postRegister}>
 					<ContainerMenor>
 						<ParagrafoTwo>USUÁRIO:</ParagrafoTwo>
-						<Input required type="text" />
+						<Input onKeyPress={keyPressEnter} required  name="username" type='text' value={form.username} onChange={onChange} />
 					</ContainerMenor>
 					<ContainerMenor>
 						<ParagrafoTwo>E-MAIL:</ParagrafoTwo>
-						<Input required type="email" />
+						<Input onKeyPress={keyPressEnter} required  name="email" type="email"  value={form.email} onChange={onChange}/>
 					</ContainerMenor>
 					<ContainerMenor>
 						<ParagrafoTwo>SENHA:</ParagrafoTwo>
-						<Input required type="password" />
+						<Input onKeyPress={keyPressEnter} required name="password" type="password" value={form.password} onChange={onChange}/>
 					</ContainerMenor>
-					<Botoes type='submit'>Cadastrar</Botoes>
+					<Botoes onKeyPress={keyPressEnter} type='submit'>Cadastrar</Botoes>
 				</ContainerForm>
 			</All>
 		);

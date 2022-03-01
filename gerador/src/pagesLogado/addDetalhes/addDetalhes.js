@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import { All } from '../../components/syledAll';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import { Botoes, ContainerForm, DivButtons, DivDados, DivInfo, DivVoltar, Options, Selects } from './styledAddDetalhes';
@@ -23,7 +23,7 @@ export default function AddDetalhes() {
 		<All>
 			<H1>Informações Finais</H1>
 			<Paragrafo>
-				Selecione o(a) professor(a), especificando qua, a matéria, turno e turma que ele leciona.
+				Selecione o(a) professor(a), especificando qual a matéria, turno e turma que ele leciona.
 			</Paragrafo>
 
 			<DivDados>

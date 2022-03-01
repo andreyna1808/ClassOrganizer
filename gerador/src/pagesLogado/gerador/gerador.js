@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import { All } from '../../components/syledAll';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import { Botoes, DivButtons } from './styledGerador';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import { ContainerFlex, ContainerForm, DivDados, DivInfo, Input, Botoes, MapDados } from './styledAddDisciplinas';
 

@@ -1,9 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from 'react-router-dom';
 import { All } from "../../components/syledAll";
+import CheckLogin from "../../hooks/checkLogin";
 import { Botoes, Paragrafo, H1, Div } from "./styledDashboard";
 
 export default function Dashboard() {
+  CheckLogin();
   const history = useHistory();
 
   const gerarNovo = () => {
@@ -18,11 +20,11 @@ export default function Dashboard() {
     <All>
       <H1>O que você deseja visualizar?</H1>
       <Paragrafo> Veja seus horários gerados anteriormente, filtre-os por turno, 
-      matéria/professor ou crie ua nova grade personalizada.</Paragrafo> 
+      professor ou crie uma nova grade personalizada.</Paragrafo> 
 
       <Div>
         <Botoes onClick={geradorExistente}>Ver existente</Botoes>
-       <Botoes onClick={gerarNovo}>Gerar novo</Botoes>   
+        <Botoes onClick={gerarNovo}>Gerar nova</Botoes>   
       </Div>
 
     </All>

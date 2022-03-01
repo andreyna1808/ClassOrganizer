@@ -18,7 +18,7 @@ export default function GerarNovo() {
 			</Paragrafo>
 
 			<Div>
-				<h1>Vamor Lá?!</h1>
+				<h1>Vamos Lá?!</h1>
 				<Botoes onClick={disciplinas}>INICIAR GERADOR</Botoes>
 			</Div>
 		</div>
