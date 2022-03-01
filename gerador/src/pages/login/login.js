@@ -13,10 +13,12 @@ export default function Login() {
 
 	const [ form, onChange ] = useForm({username: '', password: ''})
 
- 	const postLogin = () => {
+ 	const postLogin = (e) => {
+		 e.preventDefault();
 
     axios.post(Login_url, form)
     .then((res) => {
+			console.log(res);
       localStorage.setItem('tokenGerador', res.data.token);
       history.push('/dashboard')
     })

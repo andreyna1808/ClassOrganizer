@@ -14,15 +14,13 @@ export default function Cadastro() {
 	 	e.preventDefault();
 
     axios.post(Register_url, form)
-		console.log('antes do then',form)
 		.then((res) => {
-			console.log('No then', form)
 			alert('Cadastro realizado com sucesso! Bom proveito')
       localStorage.setItem('tokenGerador', res.data.token);
 			history('/login')
     })
     .catch((err) => {
-			console.log('No catch',form)
+			alert('error')
 			console.log(err.response);
     })
   }
