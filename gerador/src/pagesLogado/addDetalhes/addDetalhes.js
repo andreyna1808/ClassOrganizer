@@ -9,50 +9,22 @@ import { Botoes, ContainerForm, DivButtons, DivDados, DivInfo, DivVoltar, Option
 
 export default function AddDetalhes() {
 	const history = useHistory();
-	const [ professor, setProfessor ] = useState([])
-	const [ materias, setMaterias ] = useState([])
-	const [ turmas, setTurmas ] = useState([])
-
-	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
+	const [dadosTurma, setDadosTurmas] = useState([])
 
 	const gerador = () => {
 		history.push('/gerador');
 	};
-	const professores = () => {
-		history.push('/add-professores');
+	const voltar = () => {
+		history.push('/add-mat');
 	};
 
-	const listProfessores = () => {
-		axios.get(`${BASE_URL}/professores/`, {
-      headers: {
-        Authorization: `token ${localStorage.getItem('tokenGerador')}`
-      }})
-		.then((res) => {
-			setProfessor(res.data)
-		})
-		.catch((err) => {
-			console.log(err.response);
-		})
-	}
-	const listMaterias = () => {
-		axios.get(Materias_url, {
-      headers: {
-        Authorization: `token ${localStorage.getItem('tokenGerador')}`
-      }})
-		.then((res) => {
-			setMaterias(res.data)
-		})
-		.catch((err) => {
-			console.log(err.response);
-		})
-	}
 	const listTurma = () => {
 		axios.get(`${BASE_URL}/turmas/`, {
       headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
-			setTurmas(res.data)
+			setDadosTurmas(res.data)
 		})
 		.catch((err) => {
 			console.log(err.response);
@@ -60,10 +32,8 @@ export default function AddDetalhes() {
 	}
 
 	useEffect(() => {
-		listProfessores();
-		listMaterias();
 		listTurma();
-	}, [])
+	}, [dadosTurma])
 
 	const dadosParaGerar = (e) => {
 		e.preventDefault();
@@ -72,55 +42,26 @@ export default function AddDetalhes() {
 
 	return (
 		<All>
-			<H1>Informações Finais</H1>
-			<Paragrafo>
-				Selecione o(a) professor(a), especificando qual a matéria, turno e turma que ele leciona.
-			</Paragrafo>
+			<H1>Revisão Geral</H1>
+			<Paragrafo> Verifique cuidadosamente e caso ache necessário, pode retonar às páginas anteriores.</Paragrafo>
 
 			<DivDados>
-				<ContainerForm onSubmit={dadosParaGerar}>
-					<p>Professor(a):</p>
-					<Selects required type="checkbox">
-						<Options>Escolha um(a) professor(a)</Options>
-						{/* Fazer um map nos professores que permita filtrar o
-              nome para facilitar o checkbox */}
-					</Selects>
-
-					<DivInfo>
-						<div>
-							<p>Matéria:</p>
-							<Selects required type="checkbox">
-								<Options>Escolha a(as) matérias do(a) professor(a)</Options>
-								{/* Fazer um map das matéria, podendo selecionar mais de uma */}
-							</Selects>
-						</div>
-
-						<div>
-							<p>turno:</p>
-							<Selects required type="checkbox">
-								<Options>Escolha um turno</Options>
-								<Options>Matutino</Options>
-								<Options>Vespertino</Options>
-								<Options>Noturno</Options>
-							</Selects>
-						</div>
-
-						<div>
-							<p>Turma:</p>
-							<Selects required type="checkbox">
-								<Options>Escolha a turma do(a) professor(a) para essa(s) matéria(s)</Options>
-								{/* Fazer um map das matéria, podendo selecionar mais de uma */}
-							</Selects>
-						</div>
-					</DivInfo>
+				{dadosTurma.map((dados, index) => {
+					return <div key={dados.id}>
+						<h1>{dados.name_turma}</h1>
+						<h1>{dados.turno}</h1>
+						<h1>{dados.materias[index].name_materia}</h1>
+						<h1>{dados.materias[index].qtd_aulas}</h1>
+						<h1>{dados.materias[index].professor}</h1>
+					</div>
+				})}
 
 					<DivButtons>
 						<Botoes type="submit">Adicionar</Botoes>
 						<Botoes onClick={gerador}>Avançar</Botoes>
 					</DivButtons>
-				</ContainerForm>
 				<DivVoltar>
-					<Botoes onClick={professores}>voltar</Botoes>
+					<Botoes onClick={voltar}>voltar</Botoes>
 				</DivVoltar>
 			</DivDados>
 		</All>

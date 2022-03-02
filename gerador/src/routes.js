@@ -9,7 +9,6 @@ import Home from './pages/home/home';
 import Login from './pages/login/login';
 import AddDetalhes from './pagesLogado/addDetalhes/addDetalhes';
 import AddDisciplinas from './pagesLogado/addDisciplinas/addDisciplinas';
-import AddProfessor from './pagesLogado/addProfessor/addProfessor';
 import AddMateriaTurma from './pagesLogado/addQuantidadeMateria/materiaTurma';
 import AddTurma from './pagesLogado/addTurma/addTurma';
 import DadosGerados from './pagesLogado/dadosGerados/dadosGerados';
@@ -49,7 +48,6 @@ export default function Routes() {
 						<Route exact path="/dashboard" component={Dashboard} />
 						<Route exact path="/add-disciplinas" component={AddDisciplinas} />
 						<Route exact path="/add-turma" component={AddTurma} />
-						<Route exact path="/add-professores" component={AddProfessor} />
 						<Route exact path="/add-mat" component={AddMateriaTurma} />
 						<Route exact path="/add-detalhes" component={AddDetalhes} />
 

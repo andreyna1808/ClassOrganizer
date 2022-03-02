@@ -11,13 +11,13 @@ export default function AddTurma() {
 	const history = useHistory();
 
 	const professores = () => {
-		history.push('/add-professores');
+		history.push('/add-mat');
 	};
 	const disciplinas = () => {
 		history.push('/add-disciplinas');
 	};
 
-	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
+	const [ form, onChange, clear ] = useForm({name_turma: '', turno: ''})
 	const [ turmas, setTurmas] = useState([])
 
   const addTurma = (e) => {

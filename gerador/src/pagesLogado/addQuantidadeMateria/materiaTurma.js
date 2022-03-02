@@ -2,33 +2,33 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { BASE_URL, Materias_url } from '../../components/urls';
-import useForm from '../../hooks/useForm';
-import useFormTwo from '../../hooks/useFormTwo';
 
 export default function AddMateriaTurma() {
 	const history = useHistory();
 
-	const professores = () => {
+	const voltar = () => {
+		history.push('/add-turma');
+	};
+	const seguir = () => {
 		history.push('/add-detalhes');
 	};
-	const disciplinas = () => {
-		history.push('/add-professores');
-	};
 
-	const [ formTwo, onChangeTwo, clearTwo ] = useFormTwo({ id_materias: [] });
-
+	//Input de adição para adicionar o professor e a quantidade de aula na matéria
 	const [ infoAula, setInfoAula ] = useState(0);
-	const [ idProf, setIdProf ] = useState(0);
+	const [ idProf, setIdProf ] = useState('');
 
+	//Adicionar o array da materia para adicionar na turma
+	const [ idMateria, setIdMateria ] = useState([]);
+
+	//São os visualizadores da página
 	const [ turmas, setTurmas ] = useState([]);
-	const [ prof, setProf ] = useState([]);
 	const [ materias, setMaterias ] = useState([]);
 
 	const onAula = (e) => {
 		setInfoAula(e.target.value);
 	};
 	const onProf = (e) => {
-		setProf(e.target.value);
+		setIdProf(e.target.value);
 	};
 
 	const prevent = (e) => {
@@ -36,8 +36,10 @@ export default function AddMateriaTurma() {
 	};
 
 	const addMateriaTurma = (idTurma) => {
-		axios
-			.put(`https://dgeneretord.herokuapp.com/turma/${idTurma}/materias/`, formTwo, {
+		const body = {
+			id_materias: idMateria,
+		}
+		axios.put(`https://dgeneretord.herokuapp.com/turma/${idTurma}/materias/`, body, {
 				headers: {
 					Authorization: `token ${localStorage.getItem('tokenGerador')}`
 				}
@@ -50,37 +52,18 @@ export default function AddMateriaTurma() {
 			});
 	};
 
-	const addProfessorMateria = (idMateria) => {
+	const addDados = (idAula) => {
 		const body = {
-			id_professor: idProf
+			qtd_aulas: infoAula,
+			professor: idProf,
 		};
 		axios
-			.put(`https://dgeneretord.herokuapp.com/materia/${idMateria}/professor/`, body, {
+			.put(`https://dgeneretord.herokuapp.com/materia/${idAula}/complement/`, body, {
 				headers: {
 					Authorization: `token ${localStorage.getItem('tokenGerador')}`
 				}
 			})
 			.then((res) => {
-				console.log(res.data);
-			})
-			.catch((err) => {
-				console.log(err.response);
-			});
-	};
-
-	const addAulaMateria = (idAula) => {
-		console.log('Cliadoooooooooooooooooooooooooooooooooo', idAula);
-		const body = {
-			qtd_aulas: infoAula
-		};
-		axios
-			.put(`https://dgeneretord.herokuapp.com/materia/${idAula}/aulas/`, body, {
-				headers: {
-					Authorization: `token ${localStorage.getItem('tokenGerador')}`
-				}
-			})
-			.then((res) => {
-				console.log(res.data);
 				alert('Materia alterada com sucesso');
 			})
 			.catch((err) => {
@@ -97,21 +80,7 @@ export default function AddMateriaTurma() {
 			})
 			.then((res) => {
 				setMaterias(res.data);
-			})
-			.catch((err) => {
-				console.log(err.response);
-			});
-	};
-
-	const listProfessores = () => {
-		axios
-			.get(`${BASE_URL}/professores/`, {
-				headers: {
-					Authorization: `token ${localStorage.getItem('tokenGerador')}`
-				}
-			})
-			.then((res) => {
-				setProf(res.data);
+				setIdMateria(res.data.id)
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -136,9 +105,10 @@ export default function AddMateriaTurma() {
 	useEffect(
 		() => {
 			listMaterias();
-			listProfessores();
+			listTurmas();
+			addDados();
 		},
-		[ turmas, prof, materias ]
+		[ turmas, materias, idMateria ]
 	);
 
 	return (
@@ -149,28 +119,26 @@ export default function AddMateriaTurma() {
 						<h1>{dados.name_materia}</h1>
 						<form onSubmit={prevent}>
 							<input placeholder="Quantidade de aulas" type="number" onChange={onAula} />
-							<button type="submit" onClick={() => addAulaMateria(dados.id)}>
-								Salvar
-							</button>
-
-							<select value={idProf} onChange={onProf} required type="checkbox">
-								<option>Adicionar Profissional para a materia: </option>
-								{prof.map((info) => {
-									return (
-										<option onClick={() => addProfessorMateria(info.id)} key={info.id}>{info.name_professor}</option>
-									);
-								})}
-							</select>
+							<input placeholder="Nome do profissional" type="text" onChange={onProf} />
+							<button type="submit" onClick={() => addDados(dados.id)}>Salvar</button>
 						</form>
 					</div>
 				);
 			})}
 
-			<select required type="checkbox">
-				<option>Adicionar infomações na turma: </option>
-				{/* Fazer um map nos professores que permita filtrar o
-              nome para facilitar o checkbox */}
-			</select>
+			{turmas.map((dados) => {
+				return (
+					<div key={dados.id}>
+						<h1>{dados.name_turma}</h1>
+						<form onSubmit={prevent}>
+							<button type="submit" onClick={() => addMateriaTurma(dados.id)}>Adicionar nessa turma</button>
+						</form>
+					</div>
+				);
+			})}
+
+			<button onClick={voltar}>Salvar</button>
+			<button onClick={seguir}>Salvar</button>
 		</div>
 	);
 }
