@@ -12,7 +12,7 @@ export default function AddProfessor() {
 	const history = useHistory();
 
 	const detalhesFinais = () => {
-		history.push('/add-detalhes');
+		history.push('/add-mat');
 	};
 	const turma = () => {
 		history.push('/add-turma');
@@ -38,7 +38,7 @@ export default function AddProfessor() {
 
 	const listProfessores = () => {
 		axios.get(`${BASE_URL}/professores/`, {
-      header: {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {

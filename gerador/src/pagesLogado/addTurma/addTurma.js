@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { BASE_URL, Materias_url } from "../../components/urls";
+import { BASE_URL } from "../../components/urls";
 import useForm from "../../hooks/useForm";
-import useFormTwo from "../../hooks/useForm";
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"
 import { Botoes, ContainerFlex, ContainerForm, DivDados, DivInfo, Input, MapDados, Options, Selects } from "./styledAddTurma";
@@ -19,9 +18,7 @@ export default function AddTurma() {
 	};
 
 	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
-	const [ formTwo, onChangeTwo, clearTwo ] = useFormTwo({qtd_aulas: null})
-	const [ turmas, setTurmas ] = useState([])
-	const [ materias, setMaterias] = useState([])
+	const [ turmas, setTurmas] = useState([])
 
   const addTurma = (e) => {
     e.preventDefault()
@@ -39,29 +36,13 @@ export default function AddTurma() {
 		})
   }
 
-	const listMaterias = () => {
-		axios.get(Materias_url, {
-      header: {
+	const listTurmas = () => {
+		axios.get(`${BASE_URL}/turmas/`, {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
-			setMaterias(res.data)
-			form.materias.push(res.data)
-			console.log(setMaterias);
-			console.log(form);
-		})
-		.catch((err) => {
-			console.log(err.response);
-		})
-	}
-
-	const putMateria = (id) => {
-		axios.put(`${BASE_URL}/materia/${id}/aulas/`, formTwo,  {
-      header: {
-        Authorization: `token ${localStorage.getItem('tokenGerador')}`
-      }})
-		.then((res) => {
-			console.log('salvo com sucesso');
+			setTurmas(res.data)
 		})
 		.catch((err) => {
 			console.log(err.response);
@@ -69,9 +50,8 @@ export default function AddTurma() {
 	}
 
 	useEffect(() => {
-		listMaterias();
+		listTurmas();
 	}, [turmas])
-
 
 	return (
 		<div>
@@ -101,22 +81,13 @@ export default function AddTurma() {
 				</DivDados>
 
 				<DivInfo>
-          <div>
           <MapDados>
-						{materias.map((dados) => {
+						{turmas.map((dados) => {
 							return <div key={dados.id}>
-								<p>{dados.name_materia}</p>
-							<form onSubmit={() => putMateria(dados.id)} >
-								<input type='number' onChange={onChangeTwo} value={formTwo.qtd_aulas}></input>
-								<button type="submit" >Salvar</button>
-							</form>
+								<p>{dados.name_turma}</p>
 							</div>
 						})}
           </MapDados>
-					<Botoes onClick={professores}>Salvar quantidade</Botoes>
-          <p>No quaro ao lado, adicione o número de aulas semanais de cada turma.
-            Caso alguma matéria não tenha aulas, insira 0 (zero) no campo ou deixe nulo.</p>
-          </div>
 					<Botoes onClick={disciplinas}>Voltar</Botoes>
 					<Botoes onClick={professores}>Avançar</Botoes>
 				</DivInfo>

@@ -33,8 +33,9 @@ export default function AddDisciplinas() {
   }
 
 	const listMaterias = () => {
+		console.log(localStorage.getItem('tokenGerador'));
 		axios.get(Materias_url, {
-      header: {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {

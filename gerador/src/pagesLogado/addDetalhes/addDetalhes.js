@@ -24,7 +24,7 @@ export default function AddDetalhes() {
 
 	const listProfessores = () => {
 		axios.get(`${BASE_URL}/professores/`, {
-      header: {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
@@ -36,7 +36,7 @@ export default function AddDetalhes() {
 	}
 	const listMaterias = () => {
 		axios.get(Materias_url, {
-      header: {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
@@ -48,7 +48,7 @@ export default function AddDetalhes() {
 	}
 	const listTurma = () => {
 		axios.get(`${BASE_URL}/turmas/`, {
-      header: {
+      headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
