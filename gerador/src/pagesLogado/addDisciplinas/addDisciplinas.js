@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Materias_url } from '../../components/urls';
+import { BASE_URL, Materias_url } from '../../components/urls';
 import useForm from '../../hooks/useForm';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"

@@ -3,7 +3,6 @@ import styled from "styled-components";
 //DESIGNER O APP.JS
 export const All = styled.div `
     max-width: 100%;
-    height: 100vh;
     color: white;
     box-sizing: border-box;
     background: linear-gradient(180deg,rgba(12,96,147,1)0%,rgba(33,33,101,1)100%);

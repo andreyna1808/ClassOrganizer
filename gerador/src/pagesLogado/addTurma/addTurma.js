@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { BASE_URL, Materias_url } from "../../components/urls";
 import useForm from "../../hooks/useForm";
+import useFormTwo from "../../hooks/useForm";
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"
 import { Botoes, ContainerFlex, ContainerForm, DivDados, DivInfo, Input, MapDados, Options, Selects } from "./styledAddTurma";
@@ -18,7 +19,8 @@ export default function AddTurma() {
 	};
 
 	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
-	const [ turmas, setTurmas ] = useState()
+	const [ formTwo, onChangeTwo, clearTwo ] = useFormTwo({qtd_aulas: 0})
+	const [ turmas, setTurmas ] = useState([])
 	const [ materias, setMaterias] = useState([])
 
   const addTurma = (e) => {
@@ -53,6 +55,23 @@ export default function AddTurma() {
 		})
 	}
 
+	const putMateria = (id) => {
+		axios.put(`${BASE_URL}/materia/${id}/aulas/`, formTwo,  {
+      header: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+
+		})
+		.catch((err) => {
+			
+		})
+	}
+
+	useEffect(() => {
+		listMaterias()
+	}, [materias])
+
 
 	useEffect(() => {
 		listMaterias();
@@ -82,19 +101,20 @@ export default function AddTurma() {
               <Options value='Noturno'>Noturno</Options>
             </Selects>
 
-						<Botoes type='submit'>Adicionar</Botoes>
+						<Botoes type='submit'>Cadastrar turma</Botoes>
 					</ContainerForm>
 				</DivDados>
 
 				<DivInfo>
           <div>
           <MapDados>
-						{turmas.map((turma) => {
-							return <div key={turma.id}>
+						{materias.map((dados, id) => {
+							return <div key={dados.id}>
+								<p>{dados.name_materia}</p>
 							</div>
 						})}
           </MapDados>
-					<Botoes onClick={professores}>Salvar</Botoes>
+					<Botoes onClick={professores}>Salvar quantidade</Botoes>
           <p>No quaro ao lado, adicione o número de aulas semanais de cada turma.
             Caso alguma matéria não tenha aulas, insira 0 (zero) no campo ou deixe nulo.</p>
           </div>
