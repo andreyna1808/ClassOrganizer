@@ -10,10 +10,8 @@ import { ContainerFlex, ContainerForm, DivDados, DivInfo, Input, Botoes, MapDado
 export default function AddDisciplinas() {
 	const history = useHistory();
 
-	const [ form, onChange ] = useForm({name_materia: ''})
-	const [ materias, setMaterias ] = useState({})
-
-	console.log(localStorage.getItem('tokenGerador'));
+	const [ form, onChange, clear ] = useForm({name_materia: ''})
+	const [ materias, setMaterias ] = useState([])
 
 	const turma = () => {
 		history.push('/add-turma');
@@ -23,10 +21,11 @@ export default function AddDisciplinas() {
     e.preventDefault()
 		axios.post(Materias_url, form, {
       headers: {
-        Authorization: localStorage.getItem('tokenGerador')
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
 			showToast({ type: "sucess", message: "Disciplina Adicionada com sucesso!" });
+			clear();
 		})
 		.catch((err) => {
 			showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar a disciplina"});
@@ -34,13 +33,12 @@ export default function AddDisciplinas() {
   }
 
 	const listMaterias = () => {
-		axios.get(Materias_url, form, {
-      headers: {
-        Authorization: localStorage.getItem('tokenGerador')
+		axios.get(Materias_url, {
+      header: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
 			setMaterias(res.data)
-			console.log(res.data);
 		})
 		.catch((err) => {
 			console.log(err.response);
@@ -70,7 +68,11 @@ export default function AddDisciplinas() {
 
 				<DivInfo>
           <MapDados>
-					{/* Container com os dados, map */}
+					{materias.map((dis) => {
+						return <div key={dis.id}>
+							<p>{dis.name_materia}</p>
+						</div>
+					})}
           </MapDados>
 					<Botoes onClick={turma}>Avançar</Botoes>
 				</DivInfo>

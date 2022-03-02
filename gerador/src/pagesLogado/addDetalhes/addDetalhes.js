@@ -1,11 +1,19 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { All } from '../../components/syledAll';
+import { BASE_URL, Materias_url } from '../../components/urls';
+import useForm from '../../hooks/useForm';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import { Botoes, ContainerForm, DivButtons, DivDados, DivInfo, DivVoltar, Options, Selects } from './styledAddDetalhes';
 
 export default function AddDetalhes() {
 	const history = useHistory();
+	const [ professor, setProfessor ] = useState([])
+	const [ materias, setMaterias ] = useState([])
+	const [ turmas, setTurmas ] = useState([])
+
+	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
 
 	const gerador = () => {
 		history.push('/gerador');
@@ -13,6 +21,49 @@ export default function AddDetalhes() {
 	const professores = () => {
 		history.push('/add-professores');
 	};
+
+	const listProfessores = () => {
+		axios.get(`${BASE_URL}/professores/`, {
+      header: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+			setProfessor(res.data)
+		})
+		.catch((err) => {
+			console.log(err.response);
+		})
+	}
+	const listMaterias = () => {
+		axios.get(Materias_url, {
+      header: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+			setMaterias(res.data)
+		})
+		.catch((err) => {
+			console.log(err.response);
+		})
+	}
+	const listTurma = () => {
+		axios.get(`${BASE_URL}/turmas/`, {
+      header: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+			setTurmas(res.data)
+		})
+		.catch((err) => {
+			console.log(err.response);
+		})
+	}
+
+	useEffect(() => {
+		listProfessores();
+		listMaterias();
+		listTurma();
+	}, [])
 
 	const dadosParaGerar = (e) => {
 		e.preventDefault();
