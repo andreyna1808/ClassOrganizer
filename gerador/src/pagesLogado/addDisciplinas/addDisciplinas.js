@@ -1,10 +1,19 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Materias_url } from '../../components/urls';
+import useForm from '../../hooks/useForm';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
+import ToastAnimated, { showToast } from "../../pages/ui-lib"
 import { ContainerFlex, ContainerForm, DivDados, DivInfo, Input, Botoes, MapDados } from './styledAddDisciplinas';
 
 export default function AddDisciplinas() {
 	const history = useHistory();
+
+	const [ form, onChange ] = useForm({name_materia: ''})
+	const [ materias, setMaterias ] = useState({})
+
+	console.log(localStorage.getItem('tokenGerador'));
 
 	const turma = () => {
 		history.push('/add-turma');
@@ -12,8 +21,35 @@ export default function AddDisciplinas() {
 
   const enviarDisciplinas = (e) => {
     e.preventDefault()
-    //Axios.post...
+		axios.post(Materias_url, form, {
+      headers: {
+        Authorization: localStorage.getItem('tokenGerador')
+      }})
+		.then((res) => {
+			showToast({ type: "sucess", message: "Disciplina Adicionada com sucesso!" });
+		})
+		.catch((err) => {
+			showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar a disciplina"});
+		})
   }
+
+	const listMaterias = () => {
+		axios.get(Materias_url, form, {
+      headers: {
+        Authorization: localStorage.getItem('tokenGerador')
+      }})
+		.then((res) => {
+			setMaterias(res.data)
+			console.log(res.data);
+		})
+		.catch((err) => {
+			console.log(err.response);
+		})
+	}
+
+	useEffect(() => {
+		listMaterias()
+	}, [materias])
 
 	return (
 		<div>
@@ -24,10 +60,11 @@ export default function AddDisciplinas() {
 
 			<ContainerFlex>
 				<DivDados>
+					<ToastAnimated/>
 					<ContainerForm onSubmit={enviarDisciplinas}>
             <p>Matéria:</p>
-						<Input required type="text" placeholder="Adicione uma matéria por vez" />
-						<Botoes type='submit'>Adicionar</Botoes>
+						<Input required name='name_materia' value={form.name_materia} onChange={onChange} type="text" placeholder="Adicione uma matéria por vez" />
+						<Botoes onClick={enviarDisciplinas} type='submit'>Adicionar</Botoes>
 					</ContainerForm>
 				</DivDados>
 

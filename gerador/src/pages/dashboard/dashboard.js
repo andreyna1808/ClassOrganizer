@@ -15,6 +15,10 @@ export default function Dashboard() {
   const geradorExistente = () => {
     history.push('/gerador-existente')
   }
+  const logout = () => {
+    localStorage.removeItem('tokenGerador');
+    history.push('/login')
+  }
 
   return (
     <All>
@@ -24,7 +28,8 @@ export default function Dashboard() {
 
       <Div>
         <Botoes onClick={geradorExistente}>Ver existente</Botoes>
-        <Botoes onClick={gerarNovo}>Gerar nova</Botoes>   
+        <Botoes onClick={gerarNovo}>Gerar nova</Botoes>
+        <Botoes onClick={logout}>Fazer logout</Botoes>      
       </Div>
 
     </All>

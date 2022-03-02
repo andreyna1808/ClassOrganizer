@@ -3,6 +3,7 @@ import { Botoes, ContainerForm, ContainerMenor, Input, Paragrafo, ParagrafoTwo }
 import { Link, useHistory } from 'react-router-dom';
 import { All, CliqueAq, H1 } from '../../components/syledAll';
 import CheckLogin from '../../hooks/checkLogin';
+import ToastAnimated, { showToast } from "../ui-lib"
 import useForm from '../../hooks/useForm';
 import axios from 'axios';
 import { Login_url } from '../../components/urls';
@@ -23,7 +24,7 @@ export default function Login() {
       history.push('/dashboard')
     })
     .catch((err) => {
-      alert('Sentimos muito, mas algo deu errado com o seu Login')
+			showToast({ type: "error", message: "'Sentimos muito, mas algo deu errado com o seu Login" });
     })
   }
   const keyPressEnter = (e) => {
@@ -43,8 +44,9 @@ export default function Login() {
 					</Link>
 				</Paragrafo>
 				<ContainerForm onSubmit={postLogin}>
+					<ToastAnimated/>
 					<ContainerMenor>
-						<ParagrafoTwo>E-MAIL:</ParagrafoTwo>
+						<ParagrafoTwo>USERNAME:</ParagrafoTwo>
 						<Input onKeyPress={keyPressEnter} required name='username' value={form.username} onChange={onChange} type="text" />
 					</ContainerMenor>
 					<ContainerMenor>
