@@ -19,7 +19,7 @@ export default function AddTurma() {
 	};
 
 	const [ form, onChange, clear ] = useForm({name_turma: '', turno: '', materias: []})
-	const [ formTwo, onChangeTwo, clearTwo ] = useFormTwo({qtd_aulas: 0})
+	const [ formTwo, onChangeTwo, clearTwo ] = useFormTwo({qtd_aulas: null})
 	const [ turmas, setTurmas ] = useState([])
 	const [ materias, setMaterias] = useState([])
 
@@ -61,17 +61,12 @@ export default function AddTurma() {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
-
+			console.log('salvo com sucesso');
 		})
 		.catch((err) => {
-			
+			console.log(err.response);
 		})
 	}
-
-	useEffect(() => {
-		listMaterias()
-	}, [materias])
-
 
 	useEffect(() => {
 		listMaterias();
@@ -108,9 +103,13 @@ export default function AddTurma() {
 				<DivInfo>
           <div>
           <MapDados>
-						{materias.map((dados, id) => {
+						{materias.map((dados) => {
 							return <div key={dados.id}>
 								<p>{dados.name_materia}</p>
+							<form onSubmit={() => putMateria(dados.id)} >
+								<input type='number' onChange={onChangeTwo} value={formTwo.qtd_aulas}></input>
+								<button type="submit" >Salvar</button>
+							</form>
 							</div>
 						})}
           </MapDados>
