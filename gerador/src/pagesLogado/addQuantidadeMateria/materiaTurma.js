@@ -36,16 +36,18 @@ export default function AddMateriaTurma() {
 	};
 
 	const addMateriaTurma = (idTurma) => {
+		console.log(idMateria);
 		const body = {
 			id_materias: idMateria,
 		}
-		axios.put(`https://dgeneretord.herokuapp.com/turma/${idTurma}/materias/`, body, {
+		axios.put(`https://dgeneratord.herokuapp.com/turma/${idTurma}/materias/`, body, {
 				headers: {
 					Authorization: `token ${localStorage.getItem('tokenGerador')}`
 				}
 			})
 			.then((res) => {
 				console.log(res.data);
+				alert('Materias enviadas para a turma com sucesso')
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -58,7 +60,7 @@ export default function AddMateriaTurma() {
 			professor: idProf,
 		};
 		axios
-			.put(`https://dgeneretord.herokuapp.com/materia/${idAula}/complement/`, body, {
+			.put(`https://dgeneratord.herokuapp.com/materia/${idAula}/complement/`, body, {
 				headers: {
 					Authorization: `token ${localStorage.getItem('tokenGerador')}`
 				}
@@ -81,6 +83,7 @@ export default function AddMateriaTurma() {
 			.then((res) => {
 				setMaterias(res.data);
 				setIdMateria(res.data.id)
+				console.log(Object.keys(res.data));
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -108,7 +111,7 @@ export default function AddMateriaTurma() {
 			listTurmas();
 			addDados();
 		},
-		[ turmas, materias, idMateria ]
+		[ idMateria ]
 	);
 
 	return (
@@ -137,8 +140,8 @@ export default function AddMateriaTurma() {
 				);
 			})}
 
-			<button onClick={voltar}>Salvar</button>
-			<button onClick={seguir}>Salvar</button>
+			<button onClick={voltar}>Voltar</button>
+			<button onClick={seguir}>Avançar</button>
 		</div>
 	);
 }

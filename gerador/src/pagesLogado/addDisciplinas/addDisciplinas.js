@@ -33,7 +33,6 @@ export default function AddDisciplinas() {
   }
 
 	const listMaterias = () => {
-		console.log(localStorage.getItem('tokenGerador'));
 		axios.get(Materias_url, {
       headers: {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
@@ -48,7 +47,7 @@ export default function AddDisciplinas() {
 
 	useEffect(() => {
 		listMaterias()
-	}, [materias])
+	}, [listMaterias()])
 
 	return (
 		<div>
