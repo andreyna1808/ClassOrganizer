@@ -19,6 +19,10 @@ export default function AddMateriaTurma() {
 
 	//Adicionar o array da materia para adicionar na turma
 	const [ idMateria, setIdMateria ] = useState([]);
+	const [ array, setArray ] = useState([]);
+
+	console.log('sou o id', idMateria);
+	console.log('sou o array', array);
 
 	//São os visualizadores da página
 	const [ turmas, setTurmas ] = useState([]);
@@ -82,8 +86,7 @@ export default function AddMateriaTurma() {
 			})
 			.then((res) => {
 				setMaterias(res.data);
-				setIdMateria(res.data.id)
-				console.log(Object.keys(res.data));
+				converter();
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -111,12 +114,21 @@ export default function AddMateriaTurma() {
 			listTurmas();
 			addDados();
 		},
-		[ idMateria ]
+		[]
 	);
+
+	const converter = () => {
+		for (let i = 0; i<= array.length; i++){
+			if(array[i] !== idMateria[i]){
+				idMateria.push(array[i])
+			}
+		}
+	}
 
 	return (
 		<div>
 			{materias.map((dados) => {
+				array.push(dados.id)
 				return (
 					<div key={dados.id}>
 						<h1>{dados.name_materia}</h1>
