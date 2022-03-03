@@ -5,7 +5,8 @@ import { BASE_URL, Materias_url } from '../../components/urls';
 import useForm from '../../hooks/useForm';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"
-import { ContainerFlex, ContainerForm, DivDados, DivInfo, Input, Botoes, MapDados } from './styledAddDisciplinas';
+import X from '../../components/imgs/delet.png'
+import { ContainerFlex, ContainerForm, DivDados, DivInfo, Input, Botoes, MapDados, ContainerRow, BotX } from './styledAddDisciplinas';
 
 export default function AddDisciplinas() {
 	const history = useHistory();
@@ -38,10 +39,21 @@ export default function AddDisciplinas() {
         Authorization: `token ${localStorage.getItem('tokenGerador')}`
       }})
 		.then((res) => {
-			setMaterias(res.data)
+			setMaterias(res.data);
+			deletDisciplina();
 		})
 		.catch((err) => {
 			console.log(err.response);
+		})
+	}
+
+	const deletDisciplina = (id) => {
+		axios.delete(`https://dgeneratord.herokuapp.com/materia/${id}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+			showToast({ type: "sucess", message: "Materia deletada com sucesso!" });
 		})
 	}
 
@@ -69,9 +81,10 @@ export default function AddDisciplinas() {
 				<DivInfo>
           <MapDados>
 					{materias.map((dis) => {
-						return <div key={dis.id}>
-							<p>{dis.name_materia}</p>
-						</div>
+						return <ContainerRow key={dis.id}>
+							<li>{dis.name_materia}</li>
+							<BotX onClick={() => deletDisciplina(dis.id)} src={X} href='exemplo'></BotX>
+						</ContainerRow>
 					})}
           </MapDados>
 					<Botoes onClick={turma}>Avançar</Botoes>

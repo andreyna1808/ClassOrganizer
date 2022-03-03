@@ -2,8 +2,28 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { BASE_URL, Materias_url } from '../../components/urls';
-import ToastAnimated, { showToast } from "../../pages/ui-lib"
-import { Botoes, BotSalvar, ContainerForm, DivButtons, DivCard, DivDados, DivInfo, InputNumber, InputProf, Options, Selects } from './styledAddDetalhes';
+import { FonteH1 } from '../../pages/home/styled';
+import { Paragrafo } from '../../pages/login/styleLogin';
+import ToastAnimated, { showToast } from '../../pages/ui-lib';
+import {
+	Botoes,
+	BotSalvar,
+	ContainerAll,
+	ContainerForm,
+	DivButtons,
+	DivCard,
+	DivDados,
+	DivEsquerda,
+	DivInfo,
+	InputNumber,
+	InputProf,
+	Options,
+	Selects,
+	TextDados,
+	MapDados,
+	ContainerRow,
+	Span,
+} from './styledAddDetalhes';
 
 export default function AddMateriaTurma() {
 	const history = useHistory();
@@ -19,6 +39,7 @@ export default function AddMateriaTurma() {
 	const [ infoAula, setInfoAula ] = useState(0);
 	const [ idProf, setIdProf ] = useState('');
 	const [ infoTurma, setInfoTurma ] = useState(0);
+	const [ calculoTotal, setCalculoTotal] = useState(0)
 
 	//Adicionar o array da materia para adicionar na turma
 	const [ idMateria, setIdMateria ] = useState([]);
@@ -41,6 +62,19 @@ export default function AddMateriaTurma() {
 		e.preventDefault();
 	};
 
+	const valorTotal = () => {
+		for(let dados of materias){
+			if(calculoTotal <= 20){
+				setCalculoTotal(calculoTotal + dados.qtd_aulas)
+				let calculo = calculoTotal - 20;
+				return alert(`Ainda faltam: ${calculo} para concluir a turma` )
+			}
+			else {
+				return alert('Já passou da quantidade por semana')
+			}
+		}
+	}
+
 	const addMateriaTurma = () => {
 		const body = {
 			id_materias: idMateria
@@ -52,14 +86,18 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
-				showToast({ type: "success", message: "Matérias adicionadas na turma com sucesso!" });
+				showToast({ type: 'success', message: 'Matérias adicionadas na turma com sucesso!' });
 			})
 			.catch((err) => {
-				showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar as matérias nas turmas" });
+				showToast({
+					type: 'error',
+					message: 'Sentimos muito, mas não foi possível adicionar as matérias nas turmas'
+				});
 			});
 	};
 
 	const addDados = (idAula) => {
+		valorTotal();
 		const body = {
 			qtd_aulas: infoAula,
 			professor: idProf
@@ -71,10 +109,13 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
-				showToast({ type: "success", message: "Dados salvos na matéria com sucesso!" });
+				showToast({ type: 'success', message: 'Dados salvos na matéria com sucesso!' });
 			})
 			.catch((err) => {
-				showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar os dados nas materias" });
+				showToast({
+					type: 'error',
+					message: 'Sentimos muito, mas não foi possível adicionar os dados nas materias'
+				});
 			});
 	};
 
@@ -111,47 +152,73 @@ export default function AddMateriaTurma() {
 	useEffect(() => {
 		listMaterias();
 		listTurmas();
-	}, []);
+	}, [listMaterias()]);
 
 	return (
 		<DivDados>
-			<ToastAnimated/>
+			<FonteH1>Configurar turmas</FonteH1>
+			<Paragrafo>Selecione a turma e acrescente o número de aulas da semana para cada matéria</Paragrafo>
+			<ToastAnimated />
+
 			<DivInfo>
-				<Selects onChange={onChange}>
-					<Options value={0}>Selecionar turma</Options>
-					{turmas.map((dados) => {
-						return (
-							<Options key={dados.id} value={dados.id}>
-								{dados.name_turma}
-							</Options>
-						);
-					})}
-				</Selects>
+						<Selects onChange={onChange}>
+							<Options value={0}>Selecionar turma</Options>
+							{turmas.map((dados) => {
+								return (
+									<Options key={dados.id} value={dados.id}>
+										{dados.name_turma}
+									</Options>
+								);
+							})}
+						</Selects>
 			</DivInfo>
 
-			<DivCard>
-				{materias.map((dados) => {
-					idMateria.push(dados.id);
-					return (
-						<div key={dados.id}>
-							<h1>{dados.name_materia}</h1>
-							<ContainerForm onSubmit={prevent}>
-								<InputNumber placeholder="N. de aulas" type="number" onChange={onAula} />
-								<InputProf placeholder="Nome do(a) professor(a)" type="text" onChange={onProf} />
-								<BotSalvar type="submit" onClick={() => addDados(dados.id)}>Salvar</BotSalvar>
-							</ContainerForm>
-						</div>
-					);
+			<ContainerAll>
+				<DivEsquerda>
+					<DivCard>
+						{materias.map((dados) => {
+							idMateria.push(dados.id);
+							return (
+								<div key={dados.id}>
+									<h1>{dados.name_materia}</h1>
+									<ContainerForm onSubmit={prevent}>
+										<InputNumber required name='infoAula' placeholder="N. de aulas" type="number" onChange={onAula} />
+										<InputProf
+											name='idProf'
+											required
+											placeholder="Nome do(a) professor(a)"
+											type="text"
+											onChange={onProf}
+										/>
+										<BotSalvar type="submit" onClick={() => addDados(dados.id)}>Salvar</BotSalvar>
+									</ContainerForm>
+								</div>
+							);
+						})}
+					</DivCard>
+
+					<DivInfo>
+						<ContainerForm onSubmit={prevent}>
+							<Botoes type="submit" onClick={addMateriaTurma}>
+								Adicionar na turma
+							</Botoes>
+						</ContainerForm>
+					</DivInfo>
+				</DivEsquerda>
+				
+				<MapDados>
+				{materias.filter((dados) => {
+					return dados.qtd_aulas > 0})
+				.map((dados) => {
+					 return <ContainerRow key={dados.id}>
+									<TextDados><Span>Matéria: </Span>{dados.name_materia}</TextDados>
+									<TextDados><Span>Aulas: </Span> {dados.qtd_aulas}</TextDados>
+									<TextDados><Span>Professor(a): </Span> {dados.professor}</TextDados>
+								</ContainerRow>
 				})}
-			</DivCard>
+				</MapDados>
 
-			<DivInfo>
-				<ContainerForm onSubmit={prevent}>
-					<Botoes type="submit" onClick={addMateriaTurma}>
-						Adicionar na turma
-					</Botoes>
-				</ContainerForm>
-			</DivInfo>
+			</ContainerAll>
 
 			<DivButtons>
 				<Botoes onClick={voltar}>Voltar</Botoes>

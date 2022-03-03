@@ -5,7 +5,10 @@ import { BASE_URL } from "../../components/urls";
 import useForm from "../../hooks/useForm";
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"
+import X from '../../components/imgs/delet.png'
+
 import { Botoes, ContainerFlex, ContainerForm, DivDados, DivInfo, Input, MapDados, Options, Selects } from "./styledAddTurma";
+import { BotX, ContainerRow } from "../addDisciplinas/styledAddDisciplinas";
 
 export default function AddTurma() {
 	const history = useHistory();
@@ -43,6 +46,7 @@ export default function AddTurma() {
       }})
 		.then((res) => {
 			setTurmas(res.data)
+			deletDisciplina();
 		})
 		.catch((err) => {
 			console.log(err.response);
@@ -52,6 +56,16 @@ export default function AddTurma() {
 	useEffect(() => {
 		listTurmas();
 	}, [turmas])
+
+	const deletDisciplina = (id) => {
+		axios.delete(`https://dgeneratord.herokuapp.com/turma/${id}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem('tokenGerador')}`
+      }})
+		.then((res) => {
+			showToast({ type: "sucess", message: "Turma deletada com sucesso!" });
+		})
+	}
 
 	return (
 		<div>
@@ -83,9 +97,10 @@ export default function AddTurma() {
 				<DivInfo>
           <MapDados>
 						{turmas.map((dados) => {
-							return <div key={dados.id}>
-								<p>{dados.name_turma}</p>
-							</div>
+							return <ContainerRow key={dados.id}>
+								<li>{dados.name_turma}</li>
+								<BotX onClick={() => deletDisciplina(dados.id)} src={X} href='exemplo'></BotX>
+							</ContainerRow>
 						})}
           </MapDados>
 					<Botoes onClick={disciplinas}>Voltar</Botoes>

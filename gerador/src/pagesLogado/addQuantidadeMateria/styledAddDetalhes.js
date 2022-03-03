@@ -5,25 +5,26 @@ export const DivDados = styled.div`
   align-items: center;
   padding: 2% auto;
 `
+export const ContainerAll = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 export const DivInfo = styled.div`
-  width: 100%;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
   padding: 2% 0;
+  margin: 0 3%;
   display: flex;
   flex-direction: row;
 `
 export const DivCard = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
 `
 
 export const ContainerForm = styled.form`
-	width: 30%;
+	width: 100%;
   display: flex;
   flex-direction: row;
-  margin-right: 50px;
 `
 
 export const Selects = styled.select`
@@ -35,7 +36,6 @@ export const Selects = styled.select`
     border-radius: 10px;
     color: #212165;
     font-weight: 900;
-    margin: 0 10px;
     width: 60%;
 	`
 	
@@ -67,8 +67,11 @@ export const BotSalvar = styled.button`
     font-family:' Helvica bold';
     background-color: #ffffff;
     border: none;
-    padding: 3px;
+    padding: 5px 0;
     font-size: 16px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
     color: #212165;
     cursor: pointer;
     font-weight: 900;
@@ -94,8 +97,12 @@ export const InputNumber = styled.input`
     border: none;
     padding: 4px;
     width: 120px;
+    height: 30px;
     font-size: 16px;
     margin: 0 5px;
+    color: #212165;
+    font-weight: 900;
+    border-radius: 5px;
     color: #212165;
     font-weight: 900;
 `
@@ -104,8 +111,41 @@ export const InputProf = styled.input`
     background-color: #ffffff;
     border: none;
     padding: 4px;
+    width: 320px;
+    height: 30px;
     font-size: 16px;
     margin: 0 5px;
+    border-radius: 5px;
     color: #212165;
     font-weight: 900;
+`
+
+export const DivEsquerda = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 75%;
+`
+
+export const TextDados = styled.p `
+  font-size: 22px;
+  margin: 2px 5px;
+`
+
+export const MapDados = styled.div`
+  width: 70%;
+  background-color: white;
+  color: #212165;
+  padding: 20px;
+  margin: 10px 20px;
+`
+
+export const ContainerRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 2% 1%;
+  width: 100%;
+`
+export const Span = styled.span`
+  font-weight: bolder;
 `

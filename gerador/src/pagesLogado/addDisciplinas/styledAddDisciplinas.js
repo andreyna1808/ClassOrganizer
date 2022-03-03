@@ -44,7 +44,7 @@ export const Botoes = styled.button`
 `
 
 export const Input = styled.input`
-font-family:' Helvica bold';
+    font-family:' Helvica bold';
     background-color: #ffffff;
     border: none;
     padding: 12px 22px;
@@ -59,4 +59,26 @@ export const MapDados = styled.div`
   background-color: white;
   color: #212165;
   padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 20px;
+` 
+
+export const ContainerRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 1%;
+`
+
+export const BotX = styled.img`
+    cursor: pointer;
+    font-weight: 900;
+    margin: 0 5px;
+    width: 20px;
+    &:hover{
+        background-color:  #22b6a8;
+        width: 22px;
+        color: black;
+        transition: 0.3s;
+    }
 `
