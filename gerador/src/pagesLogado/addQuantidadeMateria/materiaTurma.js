@@ -16,13 +16,10 @@ export default function AddMateriaTurma() {
 	//Input de adição para adicionar o professor e a quantidade de aula na matéria
 	const [ infoAula, setInfoAula ] = useState(0);
 	const [ idProf, setIdProf ] = useState('');
+	const [ infoTurma, setInfoTurma ] = useState(0);
 
 	//Adicionar o array da materia para adicionar na turma
 	const [ idMateria, setIdMateria ] = useState([]);
-	const [ array, setArray ] = useState([]);
-
-	console.log('sou o id', idMateria);
-	console.log('sou o array', array);
 
 	//São os visualizadores da página
 	const [ turmas, setTurmas ] = useState([]);
@@ -34,24 +31,27 @@ export default function AddMateriaTurma() {
 	const onProf = (e) => {
 		setIdProf(e.target.value);
 	};
+	const onChange = (e) => {
+		setInfoTurma(e.target.value);
+	};
 
 	const prevent = (e) => {
 		e.preventDefault();
 	};
 
-	const addMateriaTurma = (idTurma) => {
-		console.log(idMateria);
+	const addMateriaTurma = () => {
 		const body = {
-			id_materias: idMateria,
-		}
-		axios.put(`https://dgeneratord.herokuapp.com/turma/${idTurma}/materias/`, body, {
+			id_materias: idMateria
+		};
+		axios
+			.put(`https://dgeneratord.herokuapp.com/turma/${infoTurma}/materias/`, body, {
 				headers: {
 					Authorization: `token ${localStorage.getItem('tokenGerador')}`
 				}
 			})
 			.then((res) => {
 				console.log(res.data);
-				alert('Materias enviadas para a turma com sucesso')
+				alert('Materias enviadas para a turma com sucesso');
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -61,7 +61,7 @@ export default function AddMateriaTurma() {
 	const addDados = (idAula) => {
 		const body = {
 			qtd_aulas: infoAula,
-			professor: idProf,
+			professor: idProf
 		};
 		axios
 			.put(`https://dgeneratord.herokuapp.com/materia/${idAula}/complement/`, body, {
@@ -107,42 +107,46 @@ export default function AddMateriaTurma() {
 			});
 	};
 
-	useEffect(
-		() => {
-			listMaterias();
-			listTurmas();
-			addDados();
-		},
-		[]
-	);
+	useEffect(() => {
+		listMaterias();
+		listTurmas();
+		addDados();
+	}, []);
 
 	return (
 		<div>
+			<select onChange={onChange}>
+				<option value={0}>Selecionar turma</option>
+				{turmas.map((dados) => {
+					return (
+						<option key={dados.id} value={dados.id}>
+							{dados.name_turma}
+						</option>
+					);
+				})}
+			</select>
+
 			{materias.map((dados) => {
-				idMateria.push(dados.id)
+				idMateria.push(dados.id);
 				return (
 					<div key={dados.id}>
 						<h1>{dados.name_materia}</h1>
 						<form onSubmit={prevent}>
 							<input placeholder="Quantidade de aulas" type="number" onChange={onAula} />
 							<input placeholder="Nome do profissional" type="text" onChange={onProf} />
-							<button type="submit" onClick={() => addDados(dados.id)}>Salvar</button>
+							<button type="submit" onClick={() => addDados(dados.id)}>
+								Salvar
+							</button>
 						</form>
 					</div>
 				);
 			})}
 
-			{turmas.map((dados) => {
-				return (
-					<div key={dados.id}>
-						<h1>{dados.name_turma}</h1>
-						<form onSubmit={prevent}>
-							<button type="submit" onClick={() => addMateriaTurma(dados.id)}>Adicionar nessa turma</button>
-						</form>
-					</div>
-				);
-			})}
-
+			<form onSubmit={prevent}>
+				<button type="submit" onClick={addMateriaTurma}>
+					Adicionar nessa turma
+				</button>
+			</form>
 			<button onClick={voltar}>Voltar</button>
 			<button onClick={seguir}>Avançar</button>
 		</div>
