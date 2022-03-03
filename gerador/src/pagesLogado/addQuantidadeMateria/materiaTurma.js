@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { BASE_URL, Materias_url } from '../../components/urls';
+import ToastAnimated, { showToast } from "../../pages/ui-lib"
+import { Botoes, BotSalvar, ContainerForm, DivButtons, DivCard, DivDados, DivInfo, InputNumber, InputProf, Options, Selects } from './styledAddDetalhes';
 
 export default function AddMateriaTurma() {
 	const history = useHistory();
@@ -10,7 +12,7 @@ export default function AddMateriaTurma() {
 		history.push('/add-turma');
 	};
 	const seguir = () => {
-		history.push('/add-detalhes');
+		history.push('/gerador');
 	};
 
 	//Input de adição para adicionar o professor e a quantidade de aula na matéria
@@ -50,11 +52,10 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
-				console.log(res.data);
-				alert('Materias enviadas para a turma com sucesso');
+				showToast({ type: "success", message: "Matérias adicionadas na turma com sucesso!" });
 			})
 			.catch((err) => {
-				console.log(err.response);
+				showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar as matérias nas turmas" });
 			});
 	};
 
@@ -70,10 +71,10 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
-				alert('Materia alterada com sucesso');
+				showToast({ type: "success", message: "Dados salvos na matéria com sucesso!" });
 			})
 			.catch((err) => {
-				console.log(err.response);
+				showToast({ type: "error", message: "Sentimos muito, mas não foi possível adicionar os dados nas materias" });
 			});
 	};
 
@@ -110,45 +111,52 @@ export default function AddMateriaTurma() {
 	useEffect(() => {
 		listMaterias();
 		listTurmas();
-		addDados();
 	}, []);
 
 	return (
-		<div>
-			<select onChange={onChange}>
-				<option value={0}>Selecionar turma</option>
-				{turmas.map((dados) => {
+		<DivDados>
+			<ToastAnimated/>
+			<DivInfo>
+				<Selects onChange={onChange}>
+					<Options value={0}>Selecionar turma</Options>
+					{turmas.map((dados) => {
+						return (
+							<Options key={dados.id} value={dados.id}>
+								{dados.name_turma}
+							</Options>
+						);
+					})}
+				</Selects>
+			</DivInfo>
+
+			<DivCard>
+				{materias.map((dados) => {
+					idMateria.push(dados.id);
 					return (
-						<option key={dados.id} value={dados.id}>
-							{dados.name_turma}
-						</option>
+						<div key={dados.id}>
+							<h1>{dados.name_materia}</h1>
+							<ContainerForm onSubmit={prevent}>
+								<InputNumber placeholder="N. de aulas" type="number" onChange={onAula} />
+								<InputProf placeholder="Nome do(a) professor(a)" type="text" onChange={onProf} />
+								<BotSalvar type="submit" onClick={() => addDados(dados.id)}>Salvar</BotSalvar>
+							</ContainerForm>
+						</div>
 					);
 				})}
-			</select>
+			</DivCard>
 
-			{materias.map((dados) => {
-				idMateria.push(dados.id);
-				return (
-					<div key={dados.id}>
-						<h1>{dados.name_materia}</h1>
-						<form onSubmit={prevent}>
-							<input placeholder="Quantidade de aulas" type="number" onChange={onAula} />
-							<input placeholder="Nome do profissional" type="text" onChange={onProf} />
-							<button type="submit" onClick={() => addDados(dados.id)}>
-								Salvar
-							</button>
-						</form>
-					</div>
-				);
-			})}
+			<DivInfo>
+				<ContainerForm onSubmit={prevent}>
+					<Botoes type="submit" onClick={addMateriaTurma}>
+						Adicionar na turma
+					</Botoes>
+				</ContainerForm>
+			</DivInfo>
 
-			<form onSubmit={prevent}>
-				<button type="submit" onClick={addMateriaTurma}>
-					Adicionar nessa turma
-				</button>
-			</form>
-			<button onClick={voltar}>Voltar</button>
-			<button onClick={seguir}>Avançar</button>
-		</div>
+			<DivButtons>
+				<Botoes onClick={voltar}>Voltar</Botoes>
+				<Botoes onClick={seguir}>Avançar</Botoes>
+			</DivButtons>
+		</DivDados>
 	);
 }

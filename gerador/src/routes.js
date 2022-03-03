@@ -7,7 +7,6 @@ import GeradorExistente from './pages/geradorExistente/geradorExistente';
 import GerarNovo from './pages/gerarNovo/gerarNovo';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
-import AddDetalhes from './pagesLogado/addDetalhes/addDetalhes';
 import AddDisciplinas from './pagesLogado/addDisciplinas/addDisciplinas';
 import AddMateriaTurma from './pagesLogado/addQuantidadeMateria/materiaTurma';
 import AddTurma from './pagesLogado/addTurma/addTurma';
@@ -49,7 +48,6 @@ export default function Routes() {
 						<Route exact path="/add-disciplinas" component={AddDisciplinas} />
 						<Route exact path="/add-turma" component={AddTurma} />
 						<Route exact path="/add-mat" component={AddMateriaTurma} />
-						<Route exact path="/add-detalhes" component={AddDetalhes} />
 
 						<Route exact path="/dados-gerados" component={DadosGerados} />
 						<Route exact path="/gerador" component={Gerador} />
