@@ -36,6 +36,9 @@ Problemas com o back-end nas requisções (previsão de manutenção ainda esse 
  6 - Lembrando que a tabela deve ficar visivel ao usuário e responsivo para ser utilizado em desktop ou mobile.✅	
  
  ### Back-End
-
- 1 - CRIAR AS TURMAS COM NOME, TURNO, MATÉRIAS E QUANTIDADE DE MATERIA
+ 1 - CADASTROS DE LOGIN E REGISTRAR, EM QUE CADA USUÁRIO TERÁ ACESSO AO QUE FOI FEITO
+ 2 - CRIAR AS TURMAS COM NOME, TURNO, MATÉRIAS E QUANTIDADE DE MATERIA
+ 
+  ### Formas de desenvolvimento
+  Metodologia ágil Scrum e Kaban, usando o Trello para gerenciamento diário e semanal.
 
