@@ -86,7 +86,6 @@ export default function AddMateriaTurma() {
 			})
 			.then((res) => {
 				setMaterias(res.data);
-				converter();
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -117,18 +116,10 @@ export default function AddMateriaTurma() {
 		[]
 	);
 
-	const converter = () => {
-		for (let i = 0; i<= array.length; i++){
-			if(array[i] !== idMateria[i]){
-				idMateria.push(array[i])
-			}
-		}
-	}
-
 	return (
 		<div>
 			{materias.map((dados) => {
-				array.push(dados.id)
+				idMateria.push(dados.id)
 				return (
 					<div key={dados.id}>
 						<h1>{dados.name_materia}</h1>
