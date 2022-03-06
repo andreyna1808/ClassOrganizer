@@ -41,8 +41,10 @@ export default function AddMateriaTurma() {
 	const [ infoTurma, setInfoTurma ] = useState(0);
 	const [ calculoTotal, setCalculoTotal] = useState(0)
 
+	const [renderizaTurma, setRenderizaTurma ] = useState(0)
+
 	//Adicionar o array da materia para adicionar na turma
-	const [ idMateria, setIdMateria ] = useState([]);
+	const [ idMateria ] = useState([]);
 
 	//São os visualizadores da página
 	const [ turmas, setTurmas ] = useState([]);
@@ -66,8 +68,7 @@ export default function AddMateriaTurma() {
 		for(let dados of materias){
 			if(calculoTotal <= 20){
 				setCalculoTotal(calculoTotal + dados.qtd_aulas)
-				let calculo = calculoTotal - 20;
-				return alert(`Ainda faltam: ${calculo} para concluir a turma` )
+				return alert(`Foram adicionadas: ${calculoTotal} de 20 para concluir a turma` )
 			}
 			else {
 				return alert('Já passou da quantidade por semana')
@@ -86,6 +87,7 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
+				setRenderizaTurma(renderizaTurma + 1)
 				showToast({ type: 'success', message: 'Matérias adicionadas na turma com sucesso!' });
 			})
 			.catch((err) => {
@@ -97,7 +99,6 @@ export default function AddMateriaTurma() {
 	};
 
 	const addDados = (idAula) => {
-		valorTotal();
 		const body = {
 			qtd_aulas: infoAula,
 			professor: idProf
@@ -109,6 +110,7 @@ export default function AddMateriaTurma() {
 				}
 			})
 			.then((res) => {
+				valorTotal();
 				showToast({ type: 'success', message: 'Dados salvos na matéria com sucesso!' });
 			})
 			.catch((err) => {
@@ -152,7 +154,7 @@ export default function AddMateriaTurma() {
 	useEffect(() => {
 		listMaterias();
 		listTurmas();
-	}, [listMaterias()]);
+		}, [listMaterias(), renderizaTurma]);
 
 	return (
 		<DivDados>

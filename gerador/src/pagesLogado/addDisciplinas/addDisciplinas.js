@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { BASE_URL, Materias_url } from '../../components/urls';
+import { Materias_url } from '../../components/urls';
 import useForm from '../../hooks/useForm';
 import { Paragrafo, H1 } from '../../pages/dashboard/styledDashboard';
 import ToastAnimated, { showToast } from "../../pages/ui-lib"
@@ -59,7 +59,7 @@ export default function AddDisciplinas() {
 
 	useEffect(() => {
 		listMaterias()
-	}, [listMaterias()])
+	}, [ listMaterias() ])
 
 	return (
 		<div>
@@ -73,7 +73,7 @@ export default function AddDisciplinas() {
 					<ToastAnimated/>
 					<ContainerForm onSubmit={enviarDisciplinas}>
             <p>Matéria:</p>
-						<Input required name='name_materia' value={form.name_materia} onChange={onChange} type="text" placeholder="Adicione uma matéria por vez" />
+						<Input required name='name_materia' value={form.name_materia.toLowerCase()} onChange={onChange} type="text" placeholder="Adicione uma matéria por vez" />
 						<Botoes onClick={enviarDisciplinas} type='submit'>Adicionar</Botoes>
 					</ContainerForm>
 				</DivDados>
