@@ -53,10 +53,6 @@ export default function AddTurma() {
 		})
 	}
 
-	useEffect(() => {
-		listTurmas();
-	}, [turmas])
-
 	const deletDisciplina = (id) => {
 		axios.delete(`https://dgeneratord.herokuapp.com/turma/${id}`, {
       headers: {
@@ -66,6 +62,10 @@ export default function AddTurma() {
 			showToast({ type: "sucess", message: "Turma deletada com sucesso!" });
 		})
 	}
+
+	useEffect(() => {
+		listTurmas();
+	}, [listTurmas()])
 
 	return (
 		<div>
@@ -83,11 +83,11 @@ export default function AddTurma() {
 						<Input required type="text" placeholder="Ex.: 3 ano A" value={form.name_turma} onChange={onChange} name='name_turma' />
 
             <p>turno:</p>
-						<Selects required type='text' value={form.turno} onChange={onChange} name='turno' >
+						<Selects required type='text' value={form.turno.toLowerCase()} onChange={onChange} name='turno' >
               <Options>Escolha um turno</Options>
-              <Options value='Matutino' >Matutino</Options>
-              <Options value='Vespertino'>Vespertino</Options>
-              <Options value='Noturno'>Noturno</Options>
+              <Options value='matutino' >Matutino</Options>
+              <Options value='vespertino'>Vespertino</Options>
+              <Options value='noturno'>Noturno</Options>
             </Selects>
 
 						<Botoes type='submit'>Cadastrar turma</Botoes>
