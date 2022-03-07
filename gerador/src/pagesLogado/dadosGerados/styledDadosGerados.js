@@ -71,7 +71,14 @@ export const DivDados = styled.div`
 	margin: auto;
 	padding: 0 20px;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
 	@media (max-width: 700px) {
 		padding: 0 5px;
 	}
 `;
+
+export const Info = styled.div`
+	display: flex;
+	flex-direction: column;
+`
