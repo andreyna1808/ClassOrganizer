@@ -10,7 +10,7 @@ import { BASE_URL } from '../../components/urls';
 export default function DadosGerados() {
 	const history = useHistory();
 	const [ turma, setTurma ] = useState([]);
-
+	
 	const dashboard = () => {
 		history.push('/dashboard');
 	};
@@ -28,6 +28,30 @@ export default function DadosGerados() {
 	};
 
 	const verificador = () => {};
+	
+	const aulas = []
+	
+	for(let t = 0; t<turma.length; t++){
+		
+		for(let m = 0; m<turma[t].materias.length; m++){
+			
+			let materia = turma[t].materias[m]
+			let qtd_aulas = turma[t].materias[m].qtd_aulas
+		
+			let aux = qtd_aulas
+
+			while(aux > 0){
+				aulas.push(materia)
+				turma[t].materias[m] = []
+				turma[t].materias.push(materia)
+				aux = aux -1
+			}		
+			
+		}	
+		
+	}
+	
+	console.log(aulas)
 
 	useEffect(() => {
 		getTurmas();
