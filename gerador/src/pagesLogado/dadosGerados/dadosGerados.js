@@ -26,33 +26,7 @@ export default function DadosGerados() {
 				setTurma(res.data);
 			});
 	};
-
-	const verificador = () => {};
-	
-	const aulas = []
-	
-	for(let t = 0; t<turma.length; t++){
 		
-		for(let m = 0; m<turma[t].materias.length; m++){
-			
-			let materia = turma[t].materias[m]
-			let qtd_aulas = turma[t].materias[m].qtd_aulas
-		
-			let aux = qtd_aulas
-
-			while(aux > 0){
-				aulas.push(materia)
-				turma[t].materias[m] = []
-				turma[t].materias.push(materia)
-				aux = aux -1
-			}		
-			
-		}	
-		
-	}
-	
-	console.log(aulas)
-
 	useEffect(() => {
 		getTurmas();
 	}, []);
@@ -77,21 +51,24 @@ export default function DadosGerados() {
 								<DivDias>
 									<DivDados>
 										<H1Turma>
-											{dados.materias.map((dados) => {
-												for (let i = 0; i <= dados.qtd_aulas; i++) {
-													if (dados.qtd_aulas <= 2) {
-														return (
-															<div>
-																<H1Turma>{dados.name_materia}</H1Turma>
-																<H1Turma>{dados.professor}</H1Turma>
-															</div>
-														);
-													} else if (dados.qtd_aulas > 2) {
-														return dados.qtd_aulas - 1
+											{dados.materias.map((dados, index) => {
+													let aulas = []
+
+													let materia = dados
+													let aula = dados.qtd_aulas
+
+													while(aula > 0){
+														aulas.push(materia)
+														aula = aula -1
 													}
-												}
-												return (
-													<DivCard key={dados.id}>
+
+														
+													/* 	console.log('aq', aula);
+														console.log(dados.name_materia);
+														console.log(dados); */
+														console.log(aulas);
+											
+												return (	<DivCard key={dados.id}>
 														<DivDados>
 															<H1Turma>{dados.name_materia}</H1Turma>
 															<H1Turma>{dados.professor}</H1Turma>
