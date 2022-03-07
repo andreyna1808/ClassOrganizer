@@ -42,14 +42,11 @@ export default function DadosGerados() {
 	console.log(dadosMateria);
 
 
-
-
 	useEffect(() => {
 		getTurmas();
 	}, []);
 
 	let turmas = [];
-	let aulas = [];
 
 	return (
 		<All>
@@ -64,9 +61,12 @@ export default function DadosGerados() {
 				{turma && turma.length > 0 ? (
 					turma.map((dados) => {
 						turmas.push(dados);
+						console.log(dados.materias);
 						return (
 							<div key={dados.id}>
 								{dados.materias.map((dados) => {
+									let aulas = [];
+
 									let materia = dados;
 									let aula = dados.qtd_aulas;
 
@@ -74,14 +74,20 @@ export default function DadosGerados() {
 										aulas.push(materia);
 										aula = aula - 1;
 									}
-								})}
-								{aulas.map((dados, index) => {
-									return (
-										<Info key={index}>
-											<p>{dados.name_materia}</p>
-											<p>{dados.professor}</p>
-										</Info>
-									);
+									console.log(aulas);	
+
+									const infoMateria = (aulas) => {
+										return aulas.name_materia
+									}
+								
+									let dadosTurma = aulas.map(infoMateria)
+									console.log(dadosTurma);
+									
+									return aulas.map((dados) => {
+										<div>
+											<h1>{dados.name_materia}</h1>
+										</div>
+									})
 								})}
 							</div>
 						);
