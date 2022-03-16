@@ -59,7 +59,7 @@ export default function DadosGerados() {
 									<H1Card>Sexta</H1Card>
 								</DivDias>
 								<DivDias>
-								{aulas.map((dados) => {
+								{aulas.slice(0,20).map((dados) => {
 									return (
 										<DivInfo key={dados.id}>
 												<H1Turma>{dados.name_materia}</H1Turma>
