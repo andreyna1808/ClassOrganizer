@@ -28,8 +28,9 @@ export const DivButtons = styled.div`
 
 export const DivDias = styled.div`
   width: 100%;
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	margin: 1% 0;
 `
 
 export const H1Card = styled.h1`
@@ -49,18 +50,18 @@ export const DivCard = styled.div`
 	margin: auto;
 `;
 
-export const DivCardTurma = styled.div`
-	background-color: rgba(300, 300, 300, 0.4);
+export const DivInfo = styled.div`
+	background-color: rgba(300, 300, 300, 0.2);
 	margin: 0.5% 0;
 	display: flex;
-	flex-direction: row;
-	width: 100%;
-`;
+`
 
 export const H1Turma= styled.p`
-	padding: 10% auto;
+	padding: 2% 1%;
 	text-align: left;
 	display: flex;
+	font-size: 22px;
+	font-weight: bolder;
 	justify-content: left;
 	@media (max-width: 700px) {
 		font-size: 12px;
@@ -77,8 +78,3 @@ export const DivDados = styled.div`
 		padding: 0 5px;
 	}
 `;
-
-export const Info = styled.div`
-	display: flex;
-	flex-direction: column;
-`

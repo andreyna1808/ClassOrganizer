@@ -13,6 +13,7 @@ export default function AddDisciplinas() {
 
 	const [ form, onChange, clear ] = useForm({name_materia: ''})
 	const [ materias, setMaterias ] = useState([])
+	const [ atualiza, setAtualiza ] = useState(true)
 
 	const turma = () => {
 		history.push('/add-turma');
@@ -26,6 +27,7 @@ export default function AddDisciplinas() {
       }})
 		.then((res) => {
 			showToast({ type: "sucess", message: "Disciplina Adicionada com sucesso!" });
+			setAtualiza(!atualiza)
 			clear();
 		})
 		.catch((err) => {
@@ -54,12 +56,13 @@ export default function AddDisciplinas() {
       }})
 		.then((res) => {
 			showToast({ type: "sucess", message: "Materia deletada com sucesso!" });
+			setAtualiza(!atualiza)
 		})
 	}
 
 	useEffect(() => {
 		listMaterias()
-	}, [ listMaterias() ])
+	}, [atualiza])
 
 	return (
 		<div>

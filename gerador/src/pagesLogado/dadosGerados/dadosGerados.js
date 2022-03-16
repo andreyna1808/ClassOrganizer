@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { All } from '../../components/syledAll';
-import { Paragrafo } from '../../pages/dashboard/styledDashboard';
-import { Botoes, DivCard, DivCardTurma, DivDados, DivDias, H1Card, H1Turma, Info } from './styledDadosGerados';
-import Fundo from '../../components/imgs/dados.jpg';
+import { Botoes, DivCard, DivDias, DivInfo, H1Card, H1Turma } from './styledDadosGerados';
 import axios from 'axios';
 import { BASE_URL } from '../../components/urls';
 
@@ -27,75 +25,56 @@ export default function DadosGerados() {
 			});
 	};
 
-	const infoTurma = (turma) => {
-		return turma
-	}
-
-	const infoMateria = (turma) => {
-		return turma.materias
-	}
-
-	let dadosTurma = turma.map(infoTurma)
-	console.log(dadosTurma);
-
-	let dadosMateria = turma.map(infoMateria)
-	console.log(dadosMateria);
-
-
 	useEffect(() => {
 		getTurmas();
 	}, []);
 
-	let turmas = [];
+	let aulas = [];
 
 	return (
 		<All>
-			<DivCard>
-				<DivDias>
-					<H1Card>Segunda</H1Card>
-					<H1Card>Terça</H1Card>
-					<H1Card>Quarta</H1Card>
-					<H1Card>Quinta</H1Card>
-					<H1Card>Sexta</H1Card>
-				</DivDias>
-				{turma && turma.length > 0 ? (
-					turma.map((dados) => {
-						turmas.push(dados);
-						console.log(dados.materias);
-						return (
-							<div key={dados.id}>
-								{dados.materias.map((dados) => {
-									let aulas = [];
+			{turma && turma.length > 0 ? (
+				turma.map((dados) => {
+					let turmas = [];
+					turmas.push(dados);
+					return (
+						<div key={dados.id}>
+							{dados.materias.map((dados) => {
+								let materia = dados;
+								let aula = dados.qtd_aulas;
 
-									let materia = dados;
-									let aula = dados.qtd_aulas;
-
-									while (aula > 0) {
-										aulas.push(materia);
-										aula = aula - 1;
-									}
-									console.log(aulas);	
-
-									const infoMateria = (aulas) => {
-										return aulas.name_materia
-									}
-								
-									let dadosTurma = aulas.map(infoMateria)
-									console.log(dadosTurma);
-									
-									return aulas.map((dados) => {
-										<div>
-											<h1>{dados.name_materia}</h1>
-										</div>
-									})
+								while (aula > 0) {
+									aulas.push(materia);
+									aula = aula - 1;
+								}
+								console.log(dados);
+							})}
+							<DivCard>
+								<h1>{dados.name_turma}</h1>
+								<DivDias>
+									<H1Card>Segunda</H1Card>
+									<H1Card>Terça</H1Card>
+									<H1Card>Quarta</H1Card>
+									<H1Card>Quinta</H1Card>
+									<H1Card>Sexta</H1Card>
+								</DivDias>
+								<DivDias>
+								{aulas.map((dados) => {
+									return (
+										<DivInfo key={dados.id}>
+												<H1Turma>{dados.name_materia}</H1Turma>
+												<H1Turma>{dados.professor}</H1Turma>
+										</DivInfo>
+									);
 								})}
-							</div>
-						);
-					})
-				) : (
-					<p>Carregando</p>
-				)}
-			</DivCard>
+								</DivDias>
+							</DivCard>
+						</div>
+					);
+				})
+			) : (
+				<p>Carregando</p>
+			)}
 
 			<Botoes onClick={dashboard}>voltar ao Dashboard</Botoes>
 		</All>
